@@ -1,0 +1,202 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RockPaperScissor</title>
+  <link rel="icon" type="image/png" href="logo.jpg"  >
+
+  <style>
+    body{
+      text-align: center;
+      background-color:rgb(25,25,25);
+      color:whitesmoke;
+      font-family: Arial;
+    }
+    .icon {
+      
+      width: 70px;
+      height: 70px;
+     
+    }
+    .B{
+      background-color: transparent;
+      
+      width: 120px;
+      height: 120px;
+      border:3px dotted whitesmoke;
+      border-radius: 60px;
+      margin-right: 10px;
+      cursor: pointer;
+    }
+    .result
+    {
+      font-size: 25px;
+      font-weight: bold;
+      margin-top:50px;
+    }
+    .score1{
+      margin-top:60px;
+    }
+    .reset{
+      font-size: 15px;
+      padding: 10px 50px;
+      font-weight: bold;
+      border: none;
+      background-color: whitesmoke;
+      cursor:pointer;
+    }
+
+  </style>
+</head>
+<body>
+  <h1>Rock Paper Scissors</h1>
+  <button onclick="
+    playGame('Rock');
+  " class="B">
+   <img src='Rock.png' alt="Rock"  class="icon">
+  </button>
+  <button onclick="
+    playGame('Paper');
+"class="B"><img src='Paper.png'  alt="paper"  class="icon">
+</button>
+  <button onclick="
+    playGame('Scissors'); 
+" class="B" ><img src='Scissors.png'  alt="Scissors"  class="icon">
+</button>
+<p class="js_result result"></p>
+<p class="js_choose"></p>
+<p class="js_score score1"></p>
+
+<button onclick="
+  score.Lose=0;
+  score.Tie=0;
+  score.Win=0;
+  localStorage.removeItem('score');
+  upscore();
+" class="reset">Rest Score</button>
+
+<script>
+  let score=JSON.parse(localStorage.getItem('score'))||{
+      Win:0,
+      Lose:0,
+      Tie:0
+    };
+
+   upscore();
+
+  /*if(!score)
+  {
+    score={
+      Win:0,
+      Lose:0,
+      Tie:0
+    };
+  }      alternative approach and short is mentioned above*/
+ 
+  function pickCM(){
+    const rn=Math.random();
+    let CM='';
+    if (rn >=0 && rn<1/3)
+    {
+       CM='Rock';
+    }
+    else if(rn>=1/3 && rn<2/3)
+    {
+       CM='Paper';
+    }
+    else {
+       CM='Scissors';
+    }
+    return CM;
+  }
+
+  function playGame(PM)
+  {
+      const CM=pickCM();
+      let r=''; 
+      if(PM==='Scissors'){
+          if(CM==='Scissors')
+          {
+            r='Tie';
+          }
+          else if(CM==='Rock')
+          {
+            r='You Loose';
+          }
+          else {
+            r='You Win';
+          }
+        }
+        else if(PM==='Rock')
+        {
+          if(CM==='Rock')
+          {
+            r='Tie';
+          }
+          else if(CM==='Paper')
+          {
+            r='You Loose';
+          }
+          else {
+            r='You Win';
+          }
+        }
+        else{
+          if(CM==='Paper')
+          {
+            r='Tie';
+          }
+          else if(CM==='Scissors')
+          {
+            r='You Loose';
+          }
+          else {
+            r='You Win';
+          }
+        }
+        if(r==='You Win')
+          score.Win++;
+        else if(r==='You Loose')
+          score.Lose++;
+        else
+          score.Tie++;
+
+        document.querySelector('.js_result').innerHTML=r;
+       
+        document.querySelector('.js_choose').innerHTML=`You <img src='${PM}.png' alt="Rock"  class="icon">
+        -<img src='${CM}.png' alt="Rock"  class="icon"> Computer`;
+
+        localStorage.setItem('score',JSON.stringify(score));//object to Json file (which stores the string only)
+
+        upscore();
+
+     
+      }
+     
+      
+      function upscore()
+      {
+        document.querySelector('.js_score').innerHTML=`Wins:${score.Win} Loose:${score.Lose} Tie:${score.Tie}`;
+      }
+</script>
+<footer style="background-color: #222; color: whitesmoke; text-align: center; padding: 20px 10px; font-family: Arial, sans-serif; position: fixed; bottom: 0; width: 100%; box-shadow: 0 -2px 5px rgba(0,0,0,0.5);">
+  <h2 style="font-size: 24px; margin: 0; padding-bottom: 10px; font-weight: normal;">Designed by: <span style="color: #00ffcc;">KUSHAGRA JAIN</span></h2>
+  <hr style="width: 80%; margin: 10px auto; border: 1px solid #00ffcc;">
+  <p style="font-size: 16px; margin: 5px 0;">Email: 
+    <a href="mailto:kushagrajain33@gmail.com" style="color: #00ffcc; text-decoration: none;">kushagrajain33@gmail.com</a>
+  </p>
+  <p style="font-size: 16px; margin: 5px 0;">LinkedIn: 
+    <a href="https://www.linkedin.com/in/kushagra-jain-a43495144/" target="_blank" style="color: #00ffcc; text-decoration: none;">LinkedIn Profile</a>
+  </p>
+  <p style="font-size: 16px; margin: 5px 0;">GitHub: 
+    <a href="https://github.com/kushagrajain101" target="_blank" style="color: #00ffcc; text-decoration: none;">GitHub Profile</a>
+  </p>
+</footer>
+
+
+
+
+</body>
+</html>
